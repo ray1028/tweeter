@@ -6,27 +6,76 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+
+    <!-- Adding Google font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Bungee|Source+Sans+Pro:300,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome for Arrow  -->
+    <script src="https://kit.fontawesome.com/b9ac4525c6.js"></script>
 
     <!-- App CSS -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/tweet.css" type="text/css" />
 
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
 
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
+
   </head>
 
   <body>
-
     <!-- Top nav bar (fixed) -->
-    <nav>
-      <span>tweeter</span>
+    <nav class="menu">
+      <span class="logo">tweeter</span>
+      <div class="write-tweet-container">
+        <span class="title"><strong>Write</strong> a new tweet</span>
+        <span class="arrow"><i class="fas fa-angle-double-down"></i></span>
+      </div>
     </nav>
 
-    <!-- Page-specific (main) content here -->
-    <main class="container">
-    </main>
+    <div class="main-container">
+      <header id="banner">
+        <div>
+          <img src="/images/profile-hex.png" />
+        </div>
+        <!-- <br> -->
+        <div>
+          <p class="username"><strong>Ray</strong> Jiang</p>
+        </div>
+      </header>
 
+      <!-- Page-specific (main) content here -->
+      <main class="container">
+        <section class="new-tweet">
+          <form class="submit-form" method="POST" action="/tweets">
+            <p class="error-message"></p>
+            <textarea
+              class="input-text"
+              name="text"
+              placeholder="What are you humming about?"
+            ></textarea>
+            <div class="submit-container">
+              <input class="submit-button" type="submit" value="Tweet" />
+              <span class="counter">140</span>
+            </div>
+          </form>
+        </section>
+        <section class="tweet-container">
+        </section>
+        <div class="arrow-container">
+          <i class="fas fa-angle-double-up"></i>
+        </div>
+      </main>
+  </div>
   </body>
 </html>
