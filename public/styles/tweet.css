@@ -69,3 +69,22 @@
     opacity: 0;
   }
 }
+
+.tweet:hover {
+  opacity: 1;
+  box-shadow: 10px 10px lightblue;
+}
+
+.tweet-username{
+  color: #f4f1ec;
+}
+
+.arrow-container:hover{
+  cursor: pointer;
+}
+
+.tweet:hover 
+  .tweet-username{
+  opacity: 0.75;
+  color: lightblue;
+}

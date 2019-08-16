@@ -4,12 +4,15 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
+//  function will render the tweet page to user
 const renderTweets = function(tweets) {
   let tweetsPosts = createTweetElement(tweets).join("");
   $(".tweet-container").append(tweetsPosts);
   return;
 };
 
+// helper function to read tweet from the data object and creates the tweet element 
+// with html tags
 const createTweetElement = function(tweetPosts) {
   let result = [];
   // reverse the sorting order
@@ -48,13 +51,20 @@ const createTweetElement = function(tweetPosts) {
   return result;
 };
 
+// tweet submit function, once the submit button is clicked, override the
+// original submission behaviour instead use AJAX for post. reset the input
+// box to empty 
 const submitTweets = () => {
   const submitForm = $(".submit-form");
   $(submitForm).on("submit", function(event) {
     event.preventDefault();
     ajaxPost();
+    $(".input-text").val('');
   });
 };
+
+// function for tweet posting using ajax, validates the tweet send the post the 
+// serialized object to /tweets
 
 const ajaxPost = () => {
   const submitForm = $(".submit-form");
@@ -75,6 +85,8 @@ const ajaxPost = () => {
   }
 };
 
+// function to load tweets once the page is loaded / new tweet is submitted
+
 const loadTweets = () => {
   $.get("/tweets", function(data) {
     $(".tweet-container").empty();
@@ -88,6 +100,10 @@ const loadTweets = () => {
     });
 };
 
+// helper function to validates the tweet validation rules
+// 1 tweet cannot be empty
+// 2 tweet cannot be exceed 140 characters
+
 const isValidTweet = tweetContents => {
   if (!tweetContents.split("+").join("")) {
     displayError("blank");
@@ -99,6 +115,7 @@ const isValidTweet = tweetContents => {
   return true;
 };
 
+// add function to display tweet input box once users clicked on write a new tweet arrow
 const newTweet = () => {
   $(".arrow").on("click", function() {
     $(".new-tweet").slideToggle();
@@ -106,6 +123,7 @@ const newTweet = () => {
   });
 };
 
+// helper function to display tweet error message 
 const displayError = errorType => {
   const errorMessage = $(".error-message");
   $(errorMessage).slideDown();
@@ -120,12 +138,14 @@ const displayError = errorType => {
   });
 };
 
+// main driver function
 const mainProgram = () => {
   newTweet();
   submitTweets();
   loadTweets();
 }
 
+// main
 $(document).ready(function() {
   mainProgram();
 });
