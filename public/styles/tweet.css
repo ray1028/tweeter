@@ -82,7 +82,7 @@
 .arrow-container:hover{
   cursor: pointer;
 }
-
+ 
 .tweet:hover 
   .tweet-username{
   opacity: 0.75;
