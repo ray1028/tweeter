@@ -9,7 +9,7 @@ const renderTweets = function(tweets) {
   let tweetsPosts = createTweetElement(tweets).join("");
   $(".tweet-container").append(tweetsPosts);
   return;
-};
+}; 
 
 // helper function to read tweet from the data object and creates the tweet element 
 // with html tags

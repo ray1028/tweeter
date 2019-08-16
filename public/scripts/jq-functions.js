@@ -10,8 +10,8 @@ $(document).ready(function() {
     if (remain < 0) {
       $(".counter").css("color", "red");
     } else {
-      $(".counter").css("color", "#545149");
-    }
+      $(".counter").css("color", "#545149"); 
+    } 
 
     $(".counter").text(remain);
   });
