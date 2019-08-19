@@ -11,6 +11,17 @@ const renderTweets = function(tweets) {
   return;
 }; 
 
+// function to determine day differences from creation date
+const getCurrentTime = function(created_at) {
+  let tweetCreate = 0;
+  let today = new Date().getTime();
+
+  tweetCreate = Math.floor(created_at / (60 * 60 * 24 * 1000));
+  today = Math.floor(today / (60 * 60 * 24 * 1000));
+  let daysDiff = today - tweetCreate;
+  return daysDiff;
+}
+
 // helper function to read tweet from the data object and creates the tweet element 
 // with html tags
 const createTweetElement = function(tweetPosts) {
@@ -19,13 +30,6 @@ const createTweetElement = function(tweetPosts) {
   tweetPosts = tweetPosts.sort((x, y) => y.created_at - x.created_at);
 
   for (let tweet of tweetPosts) {
-    let tweetCreate = 0;
-    let today = new Date().getTime();
-
-    tweetCreate = Math.floor(tweet.created_at / (60 * 60 * 24 * 1000));
-    today = Math.floor(today / (60 * 60 * 24 * 1000));
-    let daysDiff = today - tweetCreate;
-
     result.push(`          
       <article class="tweet">
       <header class="tweet-header">
@@ -35,10 +39,10 @@ const createTweetElement = function(tweetPosts) {
         </div>
         <div class="tweet-username">${tweet.user.handle}</div>
       </header>
-      <p class="tweet-content">${tweet.content.text}</p>
+      <p class="tweet-content">${escape(tweet.content.text)}</p>
       <footer class="tweet-footer">
       <div>
-        ${daysDiff} days ago
+        ${getCurrentTime(tweet.created_at)} days ago
       </div>
       <div class="tweet-footer-icons">
         <i class="fas fa-flag"></i>
@@ -76,12 +80,8 @@ const ajaxPost = () => {
       .done(function() {
         loadTweets();
       })
-      .done(function() {
-        console.log("post data success");
-      })
-      .fail(function() {
-        console.log("post data failed");
-      });
+  } else {
+    $('.input-text').focus();
   }
 };
 
@@ -92,12 +92,6 @@ const loadTweets = () => {
     $(".tweet-container").empty();
     renderTweets(data);
   })
-    .done(function() {
-      console.log("load data success");
-    })
-    .fail(function() {
-      console.log("load data failed");
-    });
 };
 
 // helper function to validates the tweet validation rules
@@ -118,7 +112,9 @@ const isValidTweet = tweetContents => {
 // add function to display tweet input box once users clicked on write a new tweet arrow
 const newTweet = () => {
   $(".arrow").on("click", function() {
-    $(".new-tweet").slideToggle();
+    $(".new-tweet").slideToggle(function(){
+      $('.input-text').focus();
+    });
     $(".arrow").css("cursor", "pointer");
   });
 };
@@ -138,6 +134,13 @@ const displayError = errorType => {
   });
 };
 
+// Sanitize the tweet when creating new tweet
+const escape =  function(str) {
+  let div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+ }
+
 // main driver function
 const mainProgram = () => {
   newTweet();
@@ -149,3 +152,5 @@ const mainProgram = () => {
 $(document).ready(function() {
   mainProgram();
 });
+
+
